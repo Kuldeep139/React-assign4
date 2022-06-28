@@ -1,77 +1,46 @@
-import React from 'react'
-import {useState} from 'react'
-
-function AddStudents() {
+import React, { useContext } from 'react'
+import { store } from './Details'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
   
-    const [displayData, setDisplayData] = useState([]);
-    const [inputValue, setInputValue] = useState({
-      Name: "",
-      Age: "",
-      Course: "",
-    });
+  const AddStudents = () => {
+    const[Name,setName]=useState("")
+    const[Age,setAge]=useState("")
+    const[Course,setCourse]=useState("")
+    const[Batch,setBatch]=useState("")
+    const[students,setStudents]=useContext(store)
     
-
-   
-  
-    const handleInput = (e) => {
-      const value = e.target.value;
-  
-      setInputValue({
-        ...inputValue,
-        [e.target.name]: value,
-      });
-    };
-  
-    const onsubmit = (e) => {
-      e.preventDefault();
-      const checkEmptyInput = e.target.value;
-      if (checkEmptyInput !== "") {
-        const data = inputValue;
-        setDisplayData([...displayData, data]);
-  
-        const emptyInput = { Name: "", Age: "", Course: "",Batch:""};
-        setInputValue(emptyInput);
-      }
-    };
+    
+    const ChangeHandler1=(e)=>{setName(e.target.value)}
+    const ChangeHandler2=(e)=>{setAge(e.target.value)}
+    const ChangeHandler3=(e)=>{setCourse(e.target.value)}
+    const ChangeHandler4=(e)=>{setBatch(e.target.value)}
+    
+    const SubmitHandler=()=>{
+    setStudents([...students,{Name:Name,Age:Age,Course:Course,Batch:Batch,id:new Date().getTime().toString()}])
+    } 
   
     return (
-      <>
-        <div className="form" style={{marginTop:"20px"}}>
-          <form onSubmit={onsubmit} >
-            <label >Name:</label>
-            <input
-              type="text"
-              name="Name"
-              id="Name"
-              required
-              value={inputValue.Name}
-              onChange={handleInput}
-            />
-            <br></br> <br></br>
-            <label >Age:</label>
-            <input
-              type="text"
-              name="Age"
-              id="Age"
-              required
-              value={inputValue.Age}
-              onChange={handleInput}
-            />
-             <br></br> <br></br>
-            <label >Course:</label>
-            <input
-              type="text"
-              name="Course"
-              id="Course"
-              required
-              value={inputValue.Course}
-              onChange={handleInput}
-            />
+
+       <div className='addbox'>
+
+<label className='num1'>Name:</label>
+<input className='num2' id="name" type="text" name='name' placeholder='Name' value={Name} onChange={ChangeHandler1} /> 
+<label className='num1'>Age:</label>
+<input className='num2' id="age" type="text" name='age' placeholder='Age' value={Age} onChange={ChangeHandler2} /> <br /><br />
+<label className='num1'>Course:</label>
+<input className='num2' id="course" type="text" name='course' placeholder='Course' value={Course} onChange={ChangeHandler3} /> 
+<label className='num1'>Batch:</label>
+<input className='num2' id="batch" type="text" name='batch' placeholder='Batch' value={Batch} onChange={ChangeHandler4} />
+
+
+
+         
            <br></br> <br></br>
-            <input type="submit" id="submit" />
-          </form>
+           <Link to="/student"><button style={{ marginLeft: "25px" }}>Cancel</button></Link>
+        <Link to="/student" onClick={SubmitHandler}><button>Submit</button></Link>
         </div>
-        </>
+
   )
 }
 

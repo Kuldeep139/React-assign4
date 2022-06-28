@@ -1,48 +1,49 @@
-import React from 'react'
-import './style.css'
-import {Link} from 'react-router-dom';
+import React, { useContext } from "react";
+import "./style.css";
+import { Link } from "react-router-dom";
+import { store } from './Details'
+
 
 const Students = () => {
+  const [student] = useContext(store);
     return ( <>
 
     <h1>Student Details</h1>
     
-    <Link to="/AddStudents">
-    <button className='btn'>Add Students</button>
-    </Link>
+    
 
         <div className='tab'>
         <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Sr.No</th>
-      <th scope="col">Name</th>
-      <th scope="col">Age</th>
-      <th scope="col">Course</th>
+        <thead>
+        <br />
+       
+        <Link to="/AddStudents">
+    <button className='btn'>Add Students</button>
+    </Link>
+        
 
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Rajesh</td>
-      <td>25</td>
-      <td>Full-Stack</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Sanjay</td>
-      <td>26</td>
-      <td>Java Developer</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Suraj</td>
-      <td>24</td>
-      <td>Python Developer</td>
-    </tr>
-  </tbody>
-</table>
+        <tr>
+          <th scope="col">NAME</th>
+          <th scope="col">AGE</th>
+          <th scope="col">COURSE</th>
+          <th scope="col">BATCH</th>
+          <th scope="col">CHANGE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {student.map((student) => (
+          <tr key={student.id}>
+            <td>{student.Name}</td>
+            <td>{student.Age}</td>
+            <td>{student.Course}</td>
+            <td>{student.Batch}</td>
+            <td>
+              <Link to="/Addstudent">Edit</Link>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
 </div>
 
 
